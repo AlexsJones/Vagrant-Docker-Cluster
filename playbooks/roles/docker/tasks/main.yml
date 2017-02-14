@@ -1,0 +1,31 @@
+---
+# tasks file for docker
+
+- name: Apt-get install requirements
+  apt: name={{item}} state=installed
+  with_items:
+       - apt-transport-https
+       - ca-certificates
+       - curl
+       - python-software-properties
+
+
+- name: Add docker gpg key
+  shell: "curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -"
+
+- name: Add repo path
+  shell: 'add-apt-repository "deb https://apt.dockerproject.org/repo/ ubuntu-$(lsb_release -cs) main"'
+
+- name: Install docker
+  apt:
+    name: docker.io
+    update_cache: yes
+
+- name: Update permissions
+  shell: "gpasswd -a $(whoami) docker"
+
+- name: Spawn group
+  shell: "newgrp docker"
+
+- name: Restart docker
+  shell: "service docker restart"

@@ -13,13 +13,13 @@ Vagrant.configure("2") do |config|
 
 		config.vm.define hostname do |config|
 
-			config.vm.box = "ubuntu/precise64"
+			config.vm.box = "bento/ubuntu-16.10"
 			config.vm.hostname = hostname
 			# Network
 			config.vm.network "public_network",:bridge => 'wlp4s0'
 			# SSH
 			config.ssh.insert_key = false
-			config.ssh.private_key_path = ["keys/master", "~/.vagrant.d/insecure_private_key"]
+			config.ssh.private_key_path = ["resources/master", "~/.vagrant.d/insecure_private_key"]
 
 			config.vm.provision "ansible" do |ansible|
 				if !info[:master].nil?
@@ -28,12 +28,7 @@ Vagrant.configure("2") do |config|
 					ansible.playbook = "playbooks/swarm_node.yml"
 				end
 			end
-			
-			config.vm.provision "file", source: "keys/master.pub", destination: "~/.ssh/authorized_keys"
-			config.vm.provision "shell", inline: <<-EOC
-			sudo sed -i -e "\\#PasswordAuthentication yes# s#PasswordAuthentication yes#PasswordAuthentication no#g" /etc/ssh/sshd_config
-			sudo service ssh restart
-			EOC
+			config.vm.provision "file", source: "resources/master.pub", destination: "~/.ssh/authorized_keys"
 
 			config.vm.provider :virtualbox do |v|
 				v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
