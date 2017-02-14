@@ -1,0 +1,22 @@
+---
+- name: Init swarm master
+  shell: "docker swarm init --advertise-addr {{ ansible_default_ipv4.address }}"
+  register: ret
+  ignore_errors: yes
+
+- name: Swarm token manager
+  shell: "docker swarm join-token -q manager > /tmp/token_manager"
+  register: token_manager_info
+
+- name: Swarm token worker
+  shell: "docker swarm join-token -q worker > /tmp/token_worker"
+  register: token_worker_info
+
+
+- fetch:
+    src: /tmp/token_manager
+    dest: /tmp/token_manager
+
+- fetch:
+    src: /tmp/token_worker
+    dest: /tmp/token_worker

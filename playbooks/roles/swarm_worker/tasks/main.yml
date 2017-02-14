@@ -1,0 +1,16 @@
+---
+# tasks file for swarm_worker
+
+- copy: 
+    # Warning! Need a more dynamic way of finding the token! 
+    src: '/tmp/token_worker/swarm0/tmp/token_worker'
+    dest: '/tmp/token_worker'
+    owner: 'vagrant'
+
+ 
+- name: "Read token worker"
+  shell: cat /tmp/token_worker
+  register: token_worker_info
+
+- name: Join swarm
+  shell: "docker swarm join --token {{ token_worker_info.stdout }} swarm0:2377"

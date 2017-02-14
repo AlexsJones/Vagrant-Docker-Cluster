@@ -1,0 +1,4 @@
+---
+# vars file for swarm_master
+
+interface: enp0s8

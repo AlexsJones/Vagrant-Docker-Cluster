@@ -17,6 +17,7 @@ Vagrant.configure("2") do |config|
 			config.vm.hostname = hostname
 			# Network
 			config.vm.network "public_network",:bridge => 'wlp4s0'
+			config.vm.provision :hosts, :sync_hosts => true
 			# SSH
 			config.ssh.insert_key = false
 			config.ssh.private_key_path = ["resources/master", "~/.vagrant.d/insecure_private_key"]

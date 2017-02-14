@@ -3,3 +3,4 @@
   sudo: true
   roles:
     - "docker" 
+    - "swarm_master"
