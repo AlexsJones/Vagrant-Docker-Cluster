@@ -1,6 +1,6 @@
 
 cluster = {
-	"swarm0" => { :ip => "192.168.33.10", :cpus => 1, :mem => 1024 },
+	"swarm0" => { :ip => "192.168.33.10", :cpus => 1, :mem => 1024, :master => true},
 	"swarm1" => { :ip => "192.168.33.11", :cpus => 1, :mem => 1024 },
 	"swarm2" => { :ip => "192.168.33.12", :cpus => 1, :mem => 1024 },
 	"swarm3" => { :ip => "192.168.33.13", :cpus => 1, :mem => 1024 },
@@ -20,6 +20,15 @@ Vagrant.configure("2") do |config|
 			# SSH
 			config.ssh.insert_key = false
 			config.ssh.private_key_path = ["keys/master", "~/.vagrant.d/insecure_private_key"]
+
+			config.vm.provision "ansible" do |ansible|
+				if !info[:master].nil?
+					ansible.playbook = "playbooks/swarm_master.yml"
+				else
+					ansible.playbook = "playbooks/swarm_node.yml"
+				end
+			end
+			
 			config.vm.provision "file", source: "keys/master.pub", destination: "~/.ssh/authorized_keys"
 			config.vm.provision "shell", inline: <<-EOC
 			sudo sed -i -e "\\#PasswordAuthentication yes# s#PasswordAuthentication yes#PasswordAuthentication no#g" /etc/ssh/sshd_config
