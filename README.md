@@ -9,4 +9,4 @@ This demonstration will cover
 
 ###Custom configuration
 
-`vagrant-hosts` for custom DNS resolution 
+`vagrant-address (0.3.1) vagrant-hostmanager (1.8.5) vagrant-hosts (2.8.0)`
