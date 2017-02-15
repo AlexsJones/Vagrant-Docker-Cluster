@@ -17,5 +17,5 @@
   ignore_errors: yes
 
 - name: Join swarm
-  shell: "docker swarm join --token {{ token_worker_info.stdout }} swarm0:2377"
+  shell: "docker swarm join --token {{ token_worker_info.stdout }} {{ swarm_queen }}:2377"
   ignore_errors: yes
