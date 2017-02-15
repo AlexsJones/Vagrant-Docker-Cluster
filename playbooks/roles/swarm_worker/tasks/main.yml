@@ -14,3 +14,4 @@
 
 - name: Join swarm
   shell: "docker swarm join --token {{ token_worker_info.stdout }} swarm0:2377"
+  ignore_errors: yes

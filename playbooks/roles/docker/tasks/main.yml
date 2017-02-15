@@ -22,10 +22,11 @@
     update_cache: yes
 
 - name: Update permissions
-  shell: "gpasswd -a $(whoami) docker"
+  shell: "gpasswd -a vagrant docker"
 
 - name: Spawn group
   shell: "newgrp docker"
 
-- name: Restart docker
-  shell: "service docker restart"
+- service:
+    name: docker
+    state: restarted
