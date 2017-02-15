@@ -12,6 +12,10 @@
   shell: cat /tmp/token_worker
   register: token_worker_info
 
+- name: Leave swarm if a member
+  shell: "docker swarm leave"
+  ignore_errors: yes
+
 - name: Join swarm
   shell: "docker swarm join --token {{ token_worker_info.stdout }} swarm0:2377"
   ignore_errors: yes
