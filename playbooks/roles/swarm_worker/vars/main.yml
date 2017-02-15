@@ -2,4 +2,4 @@
 # vars file for swarm_worker
 
 
-swarm_king: swarm_queen
+swarm_queen: swarm0
