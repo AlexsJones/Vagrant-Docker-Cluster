@@ -5,7 +5,7 @@ This demonstration will cover
 - Provisioning multiple instances with vagrant
 - Deploying a cluster which is capable of managing docker images
 - Deploy a docker image to the cluster 
-- Demonstrate cluster configuration during runtime with ansible
+- Demonstrate cluster configuration during runtime with ansible (post_provision_example)
 - Demonstrate a mechanism for deploying applications
 
 ###Process
