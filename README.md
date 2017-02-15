@@ -1,11 +1,26 @@
+#Docker swarm cluster
+
 This demonstration will cover
 
-- Provisioning multiple instances with vagrant ( create vm's)
-- Deploying a cluster which is capable of managing docker images ( docker swarm )
-- Deploy a docker image to the cluster (deploy to swarm)
-- Demonstrate cluster configuration during runtime (configure container)
-- Demonstrate a mechanism for deploying applications (demonstrate via swarm splugin)
+- Provisioning multiple instances with vagrant
+- Deploying a cluster which is capable of managing docker images
+- Deploy a docker image to the cluster 
+- Demonstrate cluster configuration during runtime with ansible
+- Demonstrate a mechanism for deploying applications
 
+###Process
+
+`Vagrantfile` will provision ubuntu hosts.
+`Ansible` playbooks are automatically kicked off as part of the provisioning step in vagrant.
+`Docker swarm` is formed after provisioning by using clever DNS resolution between containers.
+
+###Technologies
+
+```
+ansible -> Orchestration
+vagrant -> Provisioning
+docker  -> Deployment/Provisioning
+```
 
 ###Custom configuration
 
