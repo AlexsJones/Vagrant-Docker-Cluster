@@ -6,7 +6,7 @@ This demonstration will cover
 - Deploying a cluster which is capable of managing docker images
 - Deploy a docker image to the cluster 
 - Demonstrate cluster configuration during runtime with ansible (post_provision_example)
-- Demonstrate a mechanism for deploying applications
+- Demonstrate a mechanism for deploying applications (Jenkins server with docker swarm plugin)
 
 ###Process
 
@@ -25,3 +25,4 @@ docker  -> Deployment/Provisioning
 ###Custom configuration
 
 `vagrant-address (0.3.1) vagrant-hostmanager (1.8.5) vagrant-hosts (2.8.0)`
+For virtual DNS resolution between swarm member

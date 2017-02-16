@@ -29,6 +29,9 @@
 - name: Spawn group
   shell: "newgrp docker"
 
+- name: Update docker opts to allow tcp port
+  shell: echo "DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'" > /etc/init/docker.conf
+  
 - service:
     name: docker
     state: restarted
