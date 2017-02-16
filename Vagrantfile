@@ -10,19 +10,17 @@ cluster = {
 Vagrant.configure("2") do |config|
 
 	cluster.each_with_index do |(hostname, info), index|
-
 		config.vm.define hostname do |config|
-
+			# Settings ##################################################
 			config.vm.box = "bento/ubuntu-16.10"
 			config.vm.hostname = hostname
-			# Network
 			config.vm.network "public_network", ip: info[:ip]
-
-			config.vm.provision :hosts, :sync_hosts => true
-			# SSH
+			if !info[:master].nil?
+				config.vm.network "forwarded_port", guest: 4243, host: 4000
+			end
 			config.ssh.insert_key = false
 			config.ssh.private_key_path = ["resources/master", "~/.vagrant.d/insecure_private_key"]
-
+			# Provision ##################################################
 			config.vm.provision "ansible" do |ansible|
 				if !info[:master].nil?
 					ansible.playbook = "playbooks/swarm_master.yml"
@@ -30,8 +28,9 @@ Vagrant.configure("2") do |config|
 					ansible.playbook = "playbooks/swarm_node.yml"
 				end
 			end
+			config.vm.provision :hosts, :sync_hosts => true
 			config.vm.provision "file", source: "resources/master.pub", destination: "~/.ssh/authorized_keys"
-
+			# Configuration ##############################################
 			config.vm.provider :virtualbox do |v|
 				v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 				v.customize ["modifyvm", :id, "--memory", info[:mem]]

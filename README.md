@@ -8,6 +8,24 @@ This demonstration will cover
 - Demonstrate cluster configuration during runtime with ansible (post_provision_example)
 - Demonstrate a mechanism for deploying applications (Jenkins server with docker swarm plugin)
 
+###Installation
+
+```
+pip install virtualenv
+virtualenv env
+source env/bin/activate
+pip install -r requirements.txt
+vagrant up
+```
+
+###Dependencies
+
+```
+python with pip
+vagrant with vagrant-address (0.3.1) vagrant-hostmanager (1.8.5) vagrant-hosts (2.8.0)
+```
+
+
 ###Process
 
 `Vagrantfile` will provision ubuntu hosts.
@@ -21,8 +39,3 @@ ansible -> Orchestration
 vagrant -> Provisioning
 docker  -> Deployment/Provisioning
 ```
-
-###Custom configuration
-
-`vagrant-address (0.3.1) vagrant-hostmanager (1.8.5) vagrant-hosts (2.8.0)`
-For virtual DNS resolution between swarm member
