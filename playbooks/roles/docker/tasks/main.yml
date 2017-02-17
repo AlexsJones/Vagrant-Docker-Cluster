@@ -29,12 +29,32 @@
 - name: Spawn group
   shell: "newgrp docker"
 
-- name: Update docker opts to allow tcp port
-  shell: echo "DOCKER_OPTS='-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock'" > /etc/init/docker.conf
-  
-- service:
+- copy:
+    src:  ../resources/docker-tcp.socket
+    dest: /etc/systemd/system/docker-tcp.socket
+    owner: root
+    group: root
+    mode: 0644
+
+- systemd:
+    name: docker-tcp.socket
+    enabled: yes
+
+- systemd:
+    name: docker.socket
+    enabled: yes
+
+- systemd:
     name: docker
-    state: restarted
+    state: stopped
+
+- systemd:
+    name: docker-tcp.socket
+    state: started
+
+- systemd:
+    name: docker
+    state: started
 
 - name: Install docker machine
   shell: "curl -L https://github.com/docker/machine/releases/download/v0.9.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine &&

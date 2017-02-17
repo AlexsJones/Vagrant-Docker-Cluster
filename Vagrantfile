@@ -32,6 +32,9 @@ Vagrant.configure("2") do |config|
 			config.vm.box = "bento/ubuntu-16.10"
 			config.vm.hostname = hostname
 			config.vm.network "public_network", ip: info[:ip], bridge: "#{interface}"
+			if !info[:master].nil?
+				config.vm.network "forwarded_port", guest: 4243, host: 4244
+			end
 			config.ssh.insert_key = false
 			config.ssh.private_key_path = ["resources/master", "~/.vagrant.d/insecure_private_key"]
 			# Provision ##################################################
