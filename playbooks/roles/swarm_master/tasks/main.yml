@@ -12,7 +12,6 @@
   shell: "docker swarm join-token -q worker > /tmp/token_worker"
   register: token_worker_info
 
-
 - fetch:
     src: /tmp/token_manager
     dest: /tmp/token_manager
