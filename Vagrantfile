@@ -1,10 +1,27 @@
+require 'getoptlong'
+require 'socket'
+
+active_ip = Socket.ip_address_list.detect{|intf| intf.ipv4_private?}
+puts "Found active ip: #{active_ip.ip_address}"
+first_three_octets = active_ip.ip_address.rpartition(".")[0]
+
+interface = ''
+Socket.getifaddrs.each do |addr_info|
+    if addr_info.addr    
+        	if addr_info.addr.ipv4?
+    			if addr_info.addr.ip_address == active_ip.ip_address
+					puts "#{addr_info.name} has address #{addr_info.addr.ip_address}"
+					interface = addr_info.name
+    			end
+    		end
+    end
+end
 
 cluster = {
-	# Static IP address scheme must match that of the interface XXX.XXX.YYY.zzz
-	"swarm0" => { :ip => "192.168.10.123", :cpus => 1, :mem => 1024, :master => true},
-	"swarm1" => { :ip => "192.168.33.11", :cpus => 1, :mem => 1024 },
-	"swarm2" => { :ip => "192.168.33.12", :cpus => 1, :mem => 1024 },
-	"swarm3" => { :ip => "192.168.33.13", :cpus => 1, :mem => 1024 },
+	"swarm0" => { :ip => first_three_octets + ".123", :cpus => 1, :mem => 1024, :master => true},
+	"swarm1" => { :ip => first_three_octets + ".124", :cpus => 1, :mem => 1024 },
+	"swarm2" => { :ip => first_three_octets + ".125", :cpus => 1, :mem => 1024 },
+	"swarm3" => { :ip => first_three_octets + ".126", :cpus => 1, :mem => 1024 },
 }
 
 Vagrant.configure("2") do |config|
@@ -14,10 +31,7 @@ Vagrant.configure("2") do |config|
 			# Settings ##################################################
 			config.vm.box = "bento/ubuntu-16.10"
 			config.vm.hostname = hostname
-			config.vm.network "public_network", ip: info[:ip]
-			if !info[:master].nil?
-				config.vm.network "forwarded_port", guest: 4243, host: 4000
-			end
+			config.vm.network "public_network", ip: info[:ip], bridge: "#{interface}"
 			config.ssh.insert_key = false
 			config.ssh.private_key_path = ["resources/master", "~/.vagrant.d/insecure_private_key"]
 			# Provision ##################################################
