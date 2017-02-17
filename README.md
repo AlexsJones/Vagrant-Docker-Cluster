@@ -11,11 +11,13 @@ This demonstration will cover
 ###Installation
 
 ```
+./pre_provision #start jenkins
 pip install virtualenv
 virtualenv env
 source env/bin/activate
 pip install -r requirements.txt
 vagrant up
+./post_provision #ansible ping
 ```
 
 ###Dependencies
