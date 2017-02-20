@@ -1,3 +1,4 @@
 docker pull evarga/jenkins-slave
 docker rm jenkins_server -f
-docker run -d -p 8080:8080 -v jenkins_home:/var/jenkins_home --name jenkins_server jenkins
+PWD=`pwd`
+docker run -d -p 8080:8080 -v $PWD/jenkins_home:/var/jenkins_home --name jenkins_server jenkins

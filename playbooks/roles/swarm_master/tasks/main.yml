@@ -14,8 +14,8 @@
 
 - fetch:
     src: /tmp/token_manager
-    dest: /tmp/token_manager
+    dest: ~/
 
 - fetch:
     src: /tmp/token_worker
-    dest: /tmp/token_worker
+    dest: ~/
