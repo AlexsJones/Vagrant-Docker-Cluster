@@ -1,4 +1,4 @@
-#Docker swarm cluster
+#Vagrant Docker Cluster
 
 This demonstration will cover
 
