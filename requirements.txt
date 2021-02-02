@@ -3,7 +3,7 @@ appdirs==1.4.0
 cffi==1.9.1
 cryptography==1.7.2
 idna==2.2
-Jinja2==2.8.1
+Jinja2==2.11.3
 MarkupSafe==0.23
 packaging==16.8
 paramiko==2.1.1
